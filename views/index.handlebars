@@ -1,0 +1,47 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link rel="stylesheet" href="/style.css">
+    <title>Greetings</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="greet-header">Greetings</h1>
+        <form action="/greetings" method="POST">
+            <div class="stats">
+                <label for="name">Name: </label>
+                <input type="text" name="name" class="name">
+                {{!-- <p class="errors"></p> --}}
+                {{!-- <p>people greeted: <span class="greet-count"></span></p> --}}
+            </div>
+            <div class="radio-btns">
+                <input type="radio" class="lang-radio" id="english" name="lang" value="English">
+                <label for="english">English</label>
+
+                <input type="radio" class="lang-radio" id="afrikaans" name="lang" value="Afrikaans">
+                <label for="afrikaans">Afrikaans</label>
+
+                <input type="radio" class="lang-radio" id="zulu" name="lang" value="isiZulu">
+                <label for="zulu">isiZulu</label>
+            </div>
+            <div class="btns">
+                <button class="greet-btn" type="submit">Greet me</button>
+                {{!-- <button class="reset-btn">Reset</button> --}}
+            </div>
+        </form>
+
+        <div class="entry">
+            <h5>{{messages.info}}</h5>
+        </div>
+
+        <h5 class="greet-text">{{greeting}}</h5>
+        <a href="/greeted">Check out the greeted people -></a>
+    </div>
+</body>
+
+</html>
