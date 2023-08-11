@@ -4,10 +4,12 @@ import bodyParser from 'body-parser';
 import Greetings from './greetings.js';
 import flash from 'express-flash';
 import session from 'express-session';
+import GreetingsDatabase from './model/greetings.model.js';
 
 let greetingsFactory = Greetings();
 
 let app = express();
+let db = GreetingsDatabase();
 
 app.engine('handlebars', engine({ defaultLayout: false }));
 app.set('view engine', 'handlebars');
@@ -35,27 +37,34 @@ app.get('/', function(req, res) {
     })
 })
 
-app.post('/greetings', function(req, res) {
+app.post('/greetings', async function(req, res) {
     greetingsFactory.setName(req.body.name);
     greetingsFactory.setLanguage(req.body.lang);
 
     if(greetingsFactory.getName() === ''){
         req.flash('info', 'Please enter a name!');
     }
+    else{
+        await db.addUser(greetingsFactory.getName());
+    }
 
     res.redirect('/');
 })
 
-app.get('/greeted', function(req, res) {
-    res.render('greeted', { users: greetingsFactory.getNames()})
+app.get('/greeted', async function(req, res) {
+    let greetedUsers = await db.getUsers();
+
+    res.render('greeted', { users: greetedUsers})
 })
 
-app.get('/counter/:user', function(req, res) {
+app.get('/counter/:user', async function(req, res) {
     let name = req.params.user
+
+    let userGreetCount = await db.getUserCount(name);
 
     res.render('count', {
         userName: name.charAt(0).toUpperCase() + name.slice(1),
-        count: greetingsFactory.getUserGreetCount(name)
+        count: userGreetCount
     })
 })
 
