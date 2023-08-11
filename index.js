@@ -47,7 +47,7 @@ app.post('/greetings', async function(req, res) {
     else{
         await db.addUser(greetingsFactory.getName());
     }
-
+    
     res.redirect('/');
 })
 
