@@ -25,15 +25,18 @@ app.use(session({
 
 app.use(flash());
 
-app.get('/', function(req, res) {
+app.get('/', async function(req, res) {
     let name = greetingsFactory.getName();
     let language = greetingsFactory.getLanguage();
 
     let greet = greetingsFactory.greet(name, language);
 
+    let allGreetedUsers = await db.getAllGreetedUsers();
+
     res.render('index', {
         title: 'Home',
         greeting: greet,
+        allCount: allGreetedUsers,
     })
 })
 
@@ -48,7 +51,7 @@ app.post('/greetings', async function(req, res) {
         await db.addUser(greetingsFactory.getName());
     }
     
-    res.redirect('/');
+    res.redirect('/')
 })
 
 app.get('/greeted', async function(req, res) {
@@ -66,6 +69,13 @@ app.get('/counter/:user', async function(req, res) {
         userName: name.charAt(0).toUpperCase() + name.slice(1),
         count: userGreetCount
     })
+})
+
+app.post('/reset-counter', async function(req, res) {
+    await db.resetAll();
+    greetingsFactory.setName('')
+
+    res.redirect('/')
 })
 
 let PORT = process.env.PORT || 3000;

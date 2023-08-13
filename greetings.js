@@ -47,6 +47,7 @@ export default function Greetings(){
         else if (name === ''){
             return ''
         }
+        
 
         const foundName = names.find(nameObj => nameObj.name === lowercaseName);
 

@@ -33,10 +33,22 @@ export default function GreetingsDatabase(){
         return result;
     }
 
+    async function resetAll(){
+        await db.none(`DELETE FROM ${schema}.users`);
+    }
+
+    async function getAllGreetedUsers(){
+        let result = await db.oneOrNone(`SELECT COUNT(*) FROM ${schema}.users`);
+
+        return result;
+    }
+
     return{
         addUser,
         getUsers,
-        getUserCount
+        getUserCount,
+        resetAll,
+        getAllGreetedUsers
     }
 }
 

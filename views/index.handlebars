@@ -16,8 +16,8 @@
             <div class="stats">
                 <label for="name">Name: </label>
                 <input type="text" name="name" class="name">
-                {{!-- <p class="errors"></p> --}}
-                {{!-- <p>people greeted: <span class="greet-count"></span></p> --}}
+                <p class="errors"></p>
+                <p>Number of people greeted: <span class="greet-count">{{allCount.count}}</span></p>
             </div>
             <div class="radio-btns">
                 <input type="radio" class="lang-radio" id="english" name="lang" value="English">
@@ -31,7 +31,7 @@
             </div>
             <div class="btns">
                 <button class="greet-btn" type="submit">Greet me</button>
-                {{!-- <button class="reset-btn">Reset</button> --}}
+                <button class="reset-btn" type="button">Reset</button>
             </div>
         </form>
 
@@ -43,5 +43,29 @@
         <a href="/greeted">Check out the greeted people -></a>
     </div>
 </body>
+
+<script>
+    const resetBtn = document.querySelector('.reset-btn');
+    let errorEl = document.querySelector('.errors');
+
+    resetBtn.addEventListener('click', async function(){
+        try {
+            const response = await fetch('/reset-counter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.text();
+                //console.log(result);
+                location.reload();                
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    });
+</script>
 
 </html>
