@@ -4,9 +4,21 @@ export default function Greetings(){
     let names = [];
     let theName = '';
     let theLanguage = '';
+    let errorMsgs = [];
+    let show = false
+
+    function setErrorMsgs(msg) {
+        errorMsgs = msg;
+    }
+
+    function getErrorMsgs() {
+        return errorMsgs;
+    }
 
     function setName(name){
-        theName = name;
+        const lowercaseName = name.replace(/\s/g, '').toLowerCase();
+
+        theName = lowercaseName;
     }
 
     function getName(){
@@ -30,16 +42,22 @@ export default function Greetings(){
     }
 
     function nameExists(name) {
-        return names.some(nameObj => nameObj.name === name);
+        const lowercaseName = name.replace(/\s/g, '').toLowerCase();
+    
+        // Check if the name exists while ignoring case
+        return names.some(nameObj => nameObj.name === lowercaseName);
     }
 
     function greet(name, language) {
         const lowercaseName = name.replace(/\s/g, '').toLowerCase();
+
+        const validNamePattern = /^[a-zA-Z]+$/;
     
-        if (lowercaseName !== '' && !nameExists(lowercaseName)) {
+        if (lowercaseName !== '' && !nameExists(name.replace(/\s/g, '').toLowerCase()) && language !== '' && validNamePattern.test(lowercaseName)) {
             addCount();
             addName(lowercaseName);
-        } else if (name === '' && language === '') {
+        }
+        else if (name === '' && language === '') {
             return 'Enter a name and language';
         } else if (language === '') {
             return 'No language selected';
@@ -47,8 +65,10 @@ export default function Greetings(){
         else if (name === ''){
             return ''
         }
+        else if(!validNamePattern.test(lowercaseName)){
+            return '';
+        }
         
-
         const foundName = names.find(nameObj => nameObj.name === lowercaseName);
 
         if (foundName) {
@@ -57,11 +77,11 @@ export default function Greetings(){
 
         if(language !== ''){
             if (language === 'English') {
-                return `Hello, ${name}`;
+                return `Hello, ${name.charAt(0).toUpperCase() + name.slice(1)}`;
             } else if (language === 'Afrikaans') {
-                return `Hallo, ${name}`;
+                return `Hallo, ${name.charAt(0).toUpperCase() + name.slice(1)}`;
             } else if (language === 'isiZulu') {
-                return `Sawubona, ${name}`;
+                return `Sawubona, ${name.charAt(0).toUpperCase() + name.slice(1)}`;
             }
         }
         else{
@@ -74,7 +94,13 @@ export default function Greetings(){
     }
 
     function addName(name){
-        names.push({name, count: count});
+        const lowercaseName = name.replace(/\s/g, '').toLowerCase();
+    
+        const validNamePattern = /^[a-zA-Z]+$/;
+    
+        if (validNamePattern.test(lowercaseName)) {
+            names.push({ name: lowercaseName, count: count });
+        }
     }
 
     function clearCount(){
@@ -93,6 +119,14 @@ export default function Greetings(){
         return countOutput;
     }
 
+    function setShow(){
+        show = true;
+    }
+
+    function getShow(){
+        return show;
+    }
+
     return{
         greet,
         getNames,
@@ -104,6 +138,10 @@ export default function Greetings(){
         getLanguage,
         setLanguage,
         clearCount,
-        getUserGreetCount
+        getUserGreetCount,
+        setErrorMsgs,
+        getErrorMsgs,
+        setShow,
+        getShow
     }
 }

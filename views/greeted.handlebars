@@ -7,13 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="greeted">
-        <h2>Greeted Users</h2>
-        <ol>
-            {{#each users}}
-                <a href="/counter/{{this.username}}"><li>{{this.username}}</li></a>
-            {{/each}}
-        </ol>
+    <div class="container">
+        <div class="greeted">
+            <h2>Greeted Users</h2>
+            <ol>
+                {{#each users}}
+                    <a href="/counter/{{this.username}}"><li class="capi">{{this.username}}</li></a>
+                {{/each}}
+            </ol>
+        </div>
     </div>
 </body>
 </html>

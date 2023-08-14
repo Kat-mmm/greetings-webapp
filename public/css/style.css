@@ -125,13 +125,35 @@ input[type="text"]{
   }
 
   .greeted{
-    align-self: flex-start;
-    justify-self: flex-start;
+    align-self: center;
+    justify-self: center;
     margin: 50px;
   }
 
   .greeted a{
     font-size: 1.2rem;
+    text-decoration: none;
+    text-decoration: none;
+    color: rgb(53, 48, 48);
+  }
+
+  .greeted a:hover{
+    color: #bbb;
+  }
+
+  .capi{
+    text-transform: capitalize;
   }
   
+  .greeted ol li{
+    margin-bottom: 4px;
+  }
+
+  .flash-messages{
+    display: none;
+  }
+
+  .show{
+    display: block;
+  }
   
