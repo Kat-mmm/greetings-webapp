@@ -52,6 +52,11 @@
     let errorEl = document.querySelector('.error');
     const greetBtn = document.querySelector('.greet-btn');
     const flashDiv = document.querySelector('.flash-messages');
+    const showDiv = document.querySelector('.show');
+
+    setTimeout(()=>{
+        showDiv.style.display = 'none';
+    }, 2000)
 
     greetBtn.addEventListener('click', function(){
         flashDiv.style.display = 'block';
